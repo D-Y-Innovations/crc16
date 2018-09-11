@@ -2,7 +2,7 @@
 #include <node_buffer.h>
 #include <string>
 
-#include "./../lib/crc16.cc"
+#include "./../lib/crc32.cc"
 
 using namespace node;
 using namespace v8;
@@ -44,7 +44,7 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
     if (retType == "array")
     {
         uint8_t sumArry[2];
-        CRC16CheckSum(bytes, len, sumArry);
+        // CRC16CheckSum(bytes, len, sumArry);
 
         v8::Local<Array> sumForReturn = v8::Array::New(isolate);
         sumForReturn->Set(0, v8::Number::New(isolate, sumArry[0]));
@@ -55,7 +55,7 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
     else if(retType == "int")
     {
         uint16_t sum;
-        CRC16CheckSum(bytes, len, &sum);
+        // CRC16CheckSum(bytes, len, &sum);
         args.GetReturnValue().Set(v8::Number::New(isolate, sum));
     }
     else
@@ -65,31 +65,31 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
     }
 }
 
-void CRC16VerifySum(const FunctionCallbackInfo<Value> &args)
-{
-    Isolate *isolate = args.GetIsolate();
-    if (!args[0]->IsObject())
-    {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Input Stream is Buffer required!")));
-    }
+// void CRC16VerifySum(const FunctionCallbackInfo<Value> &args)
+// {
+//     Isolate *isolate = args.GetIsolate();
+//     if (!args[0]->IsObject())
+//     {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Input Stream is Buffer required!")));
+//     }
 
-    Handle<Value> stream = Handle<Value>::Cast(args[0]);
-    uint8_t *bytes = BufferData(stream);
-    size_t len = BufferLength(stream);
-    if(len <= 0){
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Stream buffer can't be empty!")));
-    }
+//     Handle<Value> stream = Handle<Value>::Cast(args[0]);
+//     uint8_t *bytes = BufferData(stream);
+//     size_t len = BufferLength(stream);
+//     if(len <= 0){
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Stream buffer can't be empty!")));
+//     }
 
-    bool isValid = false;
-    isValid = CRC16VerifySum(bytes, len);
+//     bool isValid = false;
+//     isValid = CRC16VerifySum(bytes, len);
 
-    args.GetReturnValue().Set(Boolean::New(isolate, isValid));
-}
+//     args.GetReturnValue().Set(Boolean::New(isolate, isValid));
+// }
 
 void init(Local<Object> exports)
 {
     NODE_SET_METHOD(exports, "checkSum", CRC16CheckSum);
-    NODE_SET_METHOD(exports, "verifySum", CRC16VerifySum);
+    // NODE_SET_METHOD(exports, "verifySum", CRC16VerifySum);
 }
 
 NODE_MODULE(crc16, init)
