@@ -16,7 +16,7 @@ size_t BufferLength(v8::Local<v8::Value> buf_val)
     return node::Buffer::Length(buf_val);
 }
 
-void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
+void CRC32CheckSum(const FunctionCallbackInfo<Value> &args)
 {
     Isolate *isolate = args.GetIsolate();
     if (!args[0]->IsObject())
@@ -44,7 +44,7 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
     if (retType == "array")
     {
         uint8_t sumArry[2];
-        // CRC16CheckSum(bytes, len, sumArry);
+        // CRC32CheckSum(bytes, len, sumArry);
 
         v8::Local<Array> sumForReturn = v8::Array::New(isolate);
         sumForReturn->Set(0, v8::Number::New(isolate, sumArry[0]));
@@ -55,17 +55,17 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
     else if(retType == "int")
     {
         uint16_t sum;
-        // CRC16CheckSum(bytes, len, &sum);
+        // CRC32CheckSum(bytes, len, &sum);
         args.GetReturnValue().Set(v8::Number::New(isolate, sum));
     }
     else
     {
-        char *sumStr = CRC16CheckSum(bytes, len);
+        char *sumStr = CRC32CheckSum(bytes, len);
         args.GetReturnValue().Set(String::NewFromUtf8(isolate, sumStr));
     }
 }
 
-// void CRC16VerifySum(const FunctionCallbackInfo<Value> &args)
+// void CRC32VerifySum(const FunctionCallbackInfo<Value> &args)
 // {
 //     Isolate *isolate = args.GetIsolate();
 //     if (!args[0]->IsObject())
@@ -81,15 +81,15 @@ void CRC16CheckSum(const FunctionCallbackInfo<Value> &args)
 //     }
 
 //     bool isValid = false;
-//     isValid = CRC16VerifySum(bytes, len);
+//     isValid = CRC32VerifySum(bytes, len);
 
 //     args.GetReturnValue().Set(Boolean::New(isolate, isValid));
 // }
 
 void init(Local<Object> exports)
 {
-    NODE_SET_METHOD(exports, "checkSum", CRC16CheckSum);
-    // NODE_SET_METHOD(exports, "verifySum", CRC16VerifySum);
+    NODE_SET_METHOD(exports, "checkSum", CRC32CheckSum);
+    // NODE_SET_METHOD(exports, "verifySum", CRC32VerifySum);
 }
 
-NODE_MODULE(crc16, init)
+NODE_MODULE(crc32, init)

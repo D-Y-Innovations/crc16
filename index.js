@@ -1,7 +1,7 @@
-// var debug = require('debug')('node-crc16');
+// var debug = require('debug')('node-crc32');
 var deprecate = require('deprecate');
 var bufferFactory = require('buffer-factory');
-var crc16Native = require('./build/Release/crc16.node');
+var crc32Native = require('./build/Release/crc32.node');
 
 var parseParam = function (input, encoding, option) {
   encoding = encoding || 'hex';
@@ -11,7 +11,7 @@ var parseParam = function (input, encoding, option) {
   }
   option = option || {};
   if(option.getArry !== undefined && option.retType === undefined){
-    deprecate('crc16.checkSum: option.getArry is deprecated! use option.retType instead.');
+    deprecate('crc32.checkSum: option.getArry is deprecated! use option.retType instead.');
     if(option.getArry == true){
       option.retType = 'array';
     }else if(option.getArry == false){
@@ -35,12 +35,12 @@ var parseParam = function (input, encoding, option) {
   })()
 
   if (buf === null) {
-    throw new TypeError('crc16.' + arguments.callee.caller.name + ' input param invalid!');
+    throw new TypeError('crc32.' + arguments.callee.caller.name + ' input param invalid!');
   }
 
   return {buf: buf, option: option};
 }
-var crc16 = {
+var crc32 = {
   /**
    * checkSum
    * @param input string | buffer
@@ -58,10 +58,10 @@ var crc16 = {
    */
   checkSum: function (input, encoding, option) {
     var param = parseParam(input, encoding, option);
-    var sum = crc16Native.checkSum(param.buf, param.option);
+    var sum = crc32Native.checkSum(param.buf, param.option);
     /**
      * @TODO
-     * option.retType == 'buffer'时，crc16_node.cc会忽略，按retType == 'hex'执行
+     * option.retType == 'buffer'时，crc32_node.cc会忽略，按retType == 'hex'执行
      * 后续可以直接在node native里直接返回buffer
      */
     if(param.option.retType === 'buffer'){
@@ -82,10 +82,10 @@ var crc16 = {
    */
   verifySum: function (input, encoding, option) {
     var param = parseParam(input, encoding, option);
-    return crc16Native.verifySum(param.buf, param.option);
+    return crc32Native.verifySum(param.buf, param.option);
   }
 };
 
-module.exports = crc16;
+module.exports = crc32;
 
 

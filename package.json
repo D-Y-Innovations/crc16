@@ -1,8 +1,12 @@
 {
-  "name": "node-crc16",
-  "version": "1.1.1",
-  "description": "A native node addon to calcalate and verify CRC16 values, adopted by MODBUS agreement.",
+  "name": "node-crc32",
+  "version": "0.1.0",
+  "description": "A native node addon to calcalate and verify CRC32 values, refer https://docs.novatel.com/OEM7/Content/Messages/32_Bit_CRC.htm.",
   "main": "index.js",
+  "repository": "https://github.com/D-Y-Innovations/node-crc32.git",
+  "author": "hxl-dy <hexulei@dyinnovations.com>",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha --reporter spec",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -14,32 +18,6 @@
     "test:node": "npm test",
     "clean": "make clean"
   },
-  "engines": {
-    "node": ">=4.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imnemo/crc16.git"
-  },
-  "keywords": [
-    "crc",
-    "crc16",
-    "modbus",
-    "modbus-rtu",
-    "modbus-serial",
-    "modbus-protocol",
-    "native",
-    "addon",
-    "nodejs",
-    "npm",
-    "node-module"
-  ],
-  "author": "imnemo <oncoding1988@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/imnemo/crc16/issues"
-  },
-  "homepage": "https://github.com/imnemo/crc16#readme",
   "runkitExampleFilename": "example/runkit.js",
   "dependencies": {
     "buffer-factory": "1.0.0-alpha",

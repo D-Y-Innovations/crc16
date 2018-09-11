@@ -1,7 +1,7 @@
 {
     "targets": [{
-        "target_name": "crc16",
-        "sources": ["./src/crc16_node.cc"]
+        "target_name": "crc32",
+        "sources": ["./src/crc32_node.cc"]
     }]
     , "cflags": ["-Wall", "-O3", "-std=c++11"]
     , "xcode_settings": {

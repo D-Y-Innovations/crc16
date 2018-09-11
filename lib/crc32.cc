@@ -67,7 +67,14 @@ unsigned long CalculateBlockCRC32( unsigned long ulCount, unsigned char *ucBuffe
 
 }
 
-char *CRC16CheckSum(uint8_t *pDataIn, int len) {
+/**
+* check crc16 sum by table look-up
+* @param [unsigned char*] *pDataIn data to be checked
+* @param [int] len data length
+* @param [unsigned short* number] sum result
+* @return void
+**/
+char *CRC32CheckSum(uint8_t *pDataIn, int len) {
     unsigned long crc32 = CalculateBlockCRC32(len, pDataIn);
     char *sum = new char[9];
     sprintf(sum, "%08x", crc32);
